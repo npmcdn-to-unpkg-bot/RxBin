@@ -1,0 +1,71 @@
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Some more RxJS</title>
+    <script src="https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js"></script>
+  </head>
+</html>
+<body>
+  <p>as easy as it can be!</p>
+  <button id="start">START</button>
+  <button id="stop">STOP</button>
+<script id="jsbin-javascript">
+'use strict';
+
+var Observable = Rx.Observable;
+
+var startButton = document.querySelector('#start');
+var stopButton = document.querySelector('#stop');
+
+var start$ = Observable.fromEvent(startButton, 'click');
+var stop$ = Observable.fromEvent(stopButton, 'click');
+
+var interval$ = Observable.interval(1000);
+
+var instervalThatStops$ = interval$.takeUntil(stop$);
+
+start$.switchMapTo(instervalThatStops$).subscribe(function (x) {
+    return console.log(x);
+});
+
+stop$.subscribe(function () {
+    return console.log('stopped!');
+});
+</script>
+
+<script id="jsbin-source-html" type="text/html">html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width") 
+    title Some more RxJS
+    script(src="https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js")
+
+body
+  p as easy as it can be!
+  button#start START
+  button#stop STOP
+  
+  
+</script>
+
+
+<script id="jsbin-source-javascript" type="text/javascript">let Observable = Rx.Observable;
+
+const startButton = document.querySelector('#start');
+const stopButton = document.querySelector('#stop');
+
+const start$ = Observable.fromEvent(startButton, 'click');
+const stop$ = Observable.fromEvent(stopButton, 'click');
+
+const interval$ = Observable.interval(1000);
+
+const instervalThatStops$ = interval$
+                              .takeUntil(stop$);
+
+start$
+    .switchMapTo(instervalThatStops$)
+    .subscribe( x => console.log(x));
+
+stop$.subscribe( () => console.log('stopped!'))</script></body>
